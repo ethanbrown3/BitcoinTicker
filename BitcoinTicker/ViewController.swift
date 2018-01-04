@@ -13,8 +13,8 @@ import SwiftyJSON
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     let baseURL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC"
-    let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
-    let currencySymbolArray = ["$", "R$", "$", "¥", "€", "£", "$", "Rp", "₪", "₹", "¥", "$", "kr", "$", "zł", "lei", "₽", "kr", "$", "$", "R"]
+    let currencyArray = ["USD","AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","ZAR"]
+    let currencySymbolArray = ["$", "$", "R$", "$", "¥", "€", "£", "$", "Rp", "₪", "₹", "¥", "$", "kr", "$", "zł", "lei", "₽", "kr", "$", "R"]
     var finalURL = ""
     
     //Pre-setup IBOutlets
@@ -65,7 +65,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             .responseJSON { response in
                 if response.result.isSuccess {
 
-                    print("Sucess! Got the bitcoin data")
                     let bitcoinJSON : JSON = JSON(response.result.value!)
 
                     self.updateBitcoinData(json: bitcoinJSON)
@@ -86,10 +85,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     /***************************************************************/
     
     func updateBitcoinData(json : JSON) {
-//        print(json)
         
         if let bitcoinResult = json["ask"].double {
-            print(bitcoinResult)
             bitcoinPriceLabel.text = "\(currencySymbolArray[currencyPicker.selectedRow(inComponent: 0)])\(bitcoinResult)"
     
         } else {
